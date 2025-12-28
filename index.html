@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥟 만두 빚기 - 2026 출산 가이드</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #6366f1; --primary-light: #818cf8; --secondary: #ec4899; --secondary-light: #f472b6;
+            --accent: #fbbf24; --success: #10b981; --info: #06b6d4;
+            --bg-dark: #0f172a; --bg-card: #1e293b; --bg-lighter: #334155;
+            --text-primary: #f1f5f9; --text-secondary: #cbd5e1;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.15), transparent 50%);
+            animation: gradient-shift 20s ease infinite;
+            z-index: 0;
+        }
+        
+        @keyframes gradient-shift {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(5%, -5%); }
+        }
+        
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        .floating-dumpling {
+            position: fixed;
+            font-size: 48px;
+            pointer-events: none;
+            z-index: 1;
+            animation: float-across 20s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.6));
+            opacity: 0.8;
+        }
+        
+        @keyframes float-across {
+            0% { transform: translate(-100px, 0) rotate(0deg); opacity: 0; }
+            10%, 90% { opacity: 0.8; }
+            100% { transform: translate(calc(100vw + 100px), -50px) rotate(360deg); opacity: 0; }
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 80px 40px 60px;
+            text-align: center;
+            border-bottom: 4px solid var(--accent);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+        }
+        
+        h1 {
+            font-family: 'Space Mono', monospace;
+            font-size: 64px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(251, 191, 36, 0.8), 4px 4px 0 rgba(0, 0, 0, 0.3);
+            animation: title-glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes title-glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(251, 191, 36, 0.8), 4px 4px 0 rgba(0, 0, 0, 0.3); }
+            50% { text-shadow: 0 0 40px rgba(251, 191, 36, 1), 4px 4px 0 rgba(0, 0, 0, 0.3); }
+        }
+        
+        .subtitle { font-size: 20px; margin-bottom: 30px; font-weight: 500; }
+        
+        .badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 30px; }
+        
+        .badge {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            border: 2px solid;
+            transition: all 0.3s;
+        }
+        
+        .badge:hover { transform: translateY(-3px) scale(1.05); }
+        
+        .badge.new { background: var(--success); border-color: var(--success); color: white; }
+        .badge.hot {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: white;
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-badge {
+            0%, 100% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(236, 72, 153, 0.8); }
+        }
+        
+        .badge.star { background: var(--accent); border-color: var(--accent); color: var(--bg-dark); }
+        
+        .content { padding: 60px 40px; }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 32px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card.primary { border-left: 4px solid var(--primary); }
+        .card.secondary { border-left: 4px solid var(--secondary); }
+        .card.accent { border-left: 4px solid var(--accent); }
+        .card.success { border-left: 4px solid var(--success); }
+        
+        h2 {
+            font-size: 36px;
+            font-weight: 900;
+            margin: 60px 0 32px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            padding-bottom: 16px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        h3 { font-size: 24px; font-weight: 700; margin: 32px 0 20px; }
+        
+        .amount-display {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            padding: 48px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+        }
+        
+        .amount-display .amount {
+            font-family: 'Space Mono', monospace;
+            font-size: 72px;
+            font-weight: 900;
+            color: var(--accent);
+            margin: 24px 0;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
+        }
+        
+        .progress-bar {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            height: 20px;
+            margin: 24px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, var(--success), var(--info));
+            height: 100%;
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            margin: 24px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-lighter);
+        }
+        
+        thead { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+        th { padding: 16px; font-weight: 700; color: white; }
+        td { padding: 16px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        tbody tr:hover { background: rgba(255, 255, 255, 0.05); }
+        
+        .timeline { position: relative; margin: 40px 0 40px 40px; }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+        }
+        
+        .timeline-item { margin-bottom: 48px; padding-left: 60px; position: relative; }
+        .timeline-item::before {
+            content: '🥟';
+            position: absolute;
+            left: -18px;
+            top: 0;
+            font-size: 36px;
+        }
+        
+        .timeline-week {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+        
+        .timeline-content {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        
+        .checklist { list-style: none; margin: 20px 0; padding: 0; }
+        .checklist li {
+            padding: 14px 20px 14px 50px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            user-select: none;
+        }
+        
+        .checklist li:hover {
+            background: rgba(99, 102, 241, 0.1);
+            transform: translateX(4px);
+        }
+        
+        .checklist li::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 4px;
+            background: transparent;
+        }
+        
+        .checklist li.checked {
+            opacity: 0.6;
+            text-decoration: line-through;
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .checklist li.checked::before {
+            background: var(--success);
+            border-color: var(--success);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Cpath fill='white' d='M7.629 14.566l-4.95-4.95 1.414-1.414 3.536 3.536 7.071-7.071 1.414 1.414z'/%3E%3C/svg%3E");
+            background-size: 16px;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+        
+        .stat-box {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .stat-box .icon { font-size: 56px; margin-bottom: 20px; }
+        .stat-box .value {
+            font-size: 40px;
+            font-weight: 900;
+            color: var(--primary);
+            font-family: 'Space Mono', monospace;
+        }
+        
+        .alert {
+            padding: 24px 24px 24px 60px;
+            margin: 32px 0;
+            border-radius: 12px;
+            position: relative;
+            border-left: 4px solid;
+            background: var(--bg-card);
+        }
+        
+        .alert::before {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 28px;
+        }
+        
+        .alert.success {
+            border-left-color: var(--success);
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), var(--bg-card));
+        }
+        
+        .alert.success::before { content: '✅'; }
+        
+        .alert.warning {
+            border-left-color: var(--accent);
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.1), var(--bg-card));
+        }
+        
+        .alert.warning::before { content: '⚠️'; }
+        
+        .alert.info {
+            border-left-color: var(--info);
+            background: linear-gradient(90deg, rgba(6, 182, 212, 0.1), var(--bg-card));
+        }
+        
+        .alert.info::before { content: '💡'; }
+        
+        .scenario-card {
+            background: var(--bg-card);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 32px 0;
+            transition: all 0.3s;
+        }
+        
+        .scenario-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+        }
+        
+        .scenario-card.recommended {
+            border-color: var(--secondary);
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.05), var(--bg-card));
+        }
+        
+        .scenario-title {
+            font-size: 26px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .click-effect {
+            position: fixed;
+            pointer-events: none;
+            font-size: 32px;
+            z-index: 9999;
+            animation: click-burst 1s ease-out forwards;
+        }
+        
+        @keyframes click-burst {
+            0% { transform: translate(-50%, -50%) scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(2) rotate(360deg); opacity: 0; }
+        }
+        
+        .scroll-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            font-size: 24px;
+        }
+        
+        .scroll-top.visible { opacity: 1; pointer-events: auto; }
+        .scroll-top:hover { transform: translateY(-8px) scale(1.1); }
+        
+        footer {
+            background: var(--bg-card);
+            border-top: 3px solid var(--primary);
+            padding: 60px 40px;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s;
+        }
+        
+        .loading.hidden { opacity: 0; visibility: hidden; }
+        .loading-dumpling { font-size: 80px; margin-bottom: 30px; animation: loading-spin 2s linear infinite; }
+        @keyframes loading-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .loading-text { font-family: 'Space Mono', monospace; font-size: 24px; color: var(--accent); font-weight: 700; }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 40px; }
+            h2 { font-size: 28px; }
+            .content, header { padding: 40px 20px; }
+            .amount-display .amount { font-size: 48px; }
+            .timeline { margin-left: 20px; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="loading-dumpling">🥟</div>
+        <div class="loading-text">LOADING...</div>
+    </div>
+
+    <div class="stars" id="stars"></div>
+    
+    <div class="floating-dumpling" style="top: 15%; animation-delay: 0s;">🥟</div>
+    <div class="floating-dumpling" style="top: 35%; animation-delay: 7s;">🥟</div>
+    <div class="floating-dumpling" style="top: 55%; animation-delay: 14s;">🥟</div>
+    <div class="floating-dumpling" style="top: 75%; animation-delay: 4s;">🥟</div>
+
+    <div class="container">
+        <header>
+            <h1>🥟 만두 빚기</h1>
+            <div class="subtitle">임신부터 육아까지, 2026년 출산 완벽 가이드</div>
+            <div class="badges">
+                <span class="badge new">✨ NEW 2026</span>
+                <span class="badge hot">🔥 의왕시 특화</span>
+                <span class="badge star">💰 총 2,980만원</span>
+            </div>
+        </header>
+
+        <div class="content">
+
+            <section>
+                <div class="amount-display">
+                    <div>🎁 의왕시 첫째 출산 기준 총 지원금</div>
+                    <div class="amount">2,980만원</div>
+                    <div class="progress-bar"><div class="progress-fill" id="totalProgress" style="width: 0%"></div></div>
+                    <div style="margin-top: 20px; font-size: 18px;">+ 육아휴직 사용 시 최대 <strong style="color: var(--accent);">3,350만원</strong> 추가!</div>
+                </div>
+            </section>
+
+            <section>
+                <h2>💰 단계별 지원금</h2>
+                
+                <div class="card accent">
+                    <h3>🤰 임신 중</h3>
+                    <table><tbody>
+                        <tr><td>💳 임신·출산 진료비</td><td style="text-align: right; color: var(--accent); font-weight: bold; font-size: 20px;">100만원</td></tr>
+                        <tr><td>💐 의왕시 임신축하금</td><td style="text-align: right; color: var(--accent); font-weight: bold; font-size: 20px;">10만원</td></tr>
+                        <tr style="background: rgba(251, 191, 36, 0.1);"><td><strong>소계</strong></td><td style="text-align: right; color: var(--accent); font-weight: bold; font-size: 24px;">110만원</td></tr>
+                    </tbody></table>
+                </div>
+
+                <div class="card secondary">
+                    <h3>👶 출산 직후</h3>
+                    <table><tbody>
+                        <tr><td>🎁 첫만남 이용권</td><td style="text-align: right; color: var(--secondary); font-weight: bold; font-size: 20px;">200만원</td></tr>
+                        <tr><td>💝 의왕시 출산장려금</td><td style="text-align: right; color: var(--secondary); font-weight: bold; font-size: 20px;">100만원</td></tr>
+                        <tr><td>🏘️ 경기도 출산지원금</td><td style="text-align: right; color: var(--secondary); font-weight: bold; font-size: 20px;">50만원</td></tr>
+                        <tr style="background: rgba(236, 72, 153, 0.1);"><td><strong>소계</strong></td><td style="text-align: right; color: var(--secondary); font-weight: bold; font-size: 24px;">350만원</td></tr>
+                    </tbody></table>
+                </div>
+
+                <div class="grid">
+                    <div class="stat-box"><div class="icon">👶</div><div class="value">1,200만원</div><div>0~11개월 부모급여</div><div style="font-size: 14px; opacity: 0.7; margin-top: 8px;">(월 100만원 × 12)</div></div>
+                    <div class="stat-box"><div class="icon">🍼</div><div class="value">600만원</div><div>12~23개월 부모급여</div><div style="font-size: 14px; opacity: 0.7; margin-top: 8px;">(월 50만원 × 12)</div></div>
+                    <div class="stat-box"><div class="icon">🎈</div><div class="value">720만원</div><div>24개월~만7세 아동수당</div><div style="font-size: 14px; opacity: 0.7; margin-top: 8px;">(월 10만원 × 72)</div></div>
+                </div>
+
+                <div class="alert success"><strong>2026년 주요 변경사항</strong><ul style="margin-top: 12px; padding-left: 20px;">
+                    <li>아동수당 만 8세까지 확대 (기존 만 7세)</li>
+                    <li>지역별 차등: 비수도권 +5천원</li>
+                    <li>육아휴직급여 사후지급금 폐지 → 매달 전액 지급</li>
+                    <li>출산휴가급여 상한액 220만원</li>
+                </ul></div>
+            </section>
+
+            <section>
+                <h2>📅 임신·출산 타임라인</h2>
+                
+                <div class="alert info"><strong>산부인과 방문 주기</strong><ul style="margin-top: 12px; padding-left: 20px; line-height: 2;">
+                    <li>임신 ~12주: <strong>2~3주 간격</strong></li>
+                    <li>13~27주: <strong>4주 간격</strong></li>
+                    <li>28~35주: <strong>2주 간격</strong></li>
+                    <li>36주~출산: <strong>1주 간격</strong></li>
+                </ul></div>
+
+                <h3>🗓️ 주차별 핵심 체크리스트</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-week">임신 확인 (4~5주)</div>
+                        <div class="timeline-content">
+                            <strong style="display: block; margin-bottom: 16px;">해야 할 일</strong>
+                            <ul class="checklist">
+                                <li>산부인과 첫 방문</li>
+                                <li>보건소 임산부 등록</li>
+                                <li>국민행복카드 신청 (100만원)</li>
+                                <li>직장에 임신 사실 알림</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-week">32주 <span class="badge hot">중요</span></div>
+                        <div class="timeline-content">
+                            <strong style="display: block; margin-bottom: 16px;">산후조리원 예약!</strong>
+                            <ul class="checklist">
+                                <li>산후조리원 예약 완료 (예약금 10%)</li>
+                                <li>출산용품 준비 완료</li>
+                            </ul>
+                            <div class="alert warning" style="margin-top: 16px;"><strong>주의:</strong> 인기 조리원은 빨리 마감됩니다!</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-week">34~35주 <span class="badge hot">필수</span></div>
+                        <div class="timeline-content">
+                            <strong style="display: block; margin-bottom: 16px;">휴가 신청</strong>
+                            <ul class="checklist">
+                                <li>출산전후휴가 신청 (출산 45일 전 필수!)</li>
+                                <li>배우자 출산휴가 준비 (20일)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-week">출산 직후 <span class="badge hot">1주일 내</span></div>
+                        <div class="timeline-content">
+                            <strong style="display: block; margin-bottom: 16px;">행복출산 원스톱 신청</strong>
+                            <ul class="checklist">
+                                <li>출생신고 (주민센터)</li>
+                                <li>첫만남 이용권 200만원</li>
+                                <li>부모급여 월 100만원</li>
+                                <li>의왕시 출산장려금 100만원</li>
+                                <li>경기도 출산지원금 50만원</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>💼 육아휴직 전략</h2>
+
+                <div class="scenario-card recommended">
+                    <div class="scenario-title">💎 시나리오 1: 최대 급여 <span class="badge hot">추천</span></div>
+                    <div style="margin: 20px 0; font-size: 18px; color: var(--text-secondary);">엄마 6개월 → 아빠 6개월 (6+6 제도)</div>
+                    <div class="amount-display" style="margin: 24px 0;">
+                        <div>총 육아휴직급여</div>
+                        <div class="amount" style="font-size: 56px;">3,350만원</div>
+                        <div style="font-size: 16px;">+ 부모급여 1,200만원 = 총 <strong>4,550만원</strong> (12개월)</div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-title">💼 시나리오 2: 맞벌이 유지 <span class="badge new">현실적</span></div>
+                    <div style="margin: 20px 0;">엄마 6개월 → 복직 + 근로시간 단축</div>
+                    <div style="background: rgba(16, 185, 129, 0.1); padding: 24px; border-radius: 12px; margin: 24px 0;">
+                        <div>육아휴직급여: <strong style="color: var(--success); font-size: 32px;">1,350만원</strong></div>
+                        <div style="margin-top: 8px;">+ 복직 후 소득: 약 1,800~2,400만원</div>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div class="scenario-title">🏃 시나리오 3: 빠른 복직 <span class="badge star">고소득자</span></div>
+                    <div style="margin: 20px 0;">엄마 3개월 → 아빠 3개월</div>
+                    <div style="background: rgba(99, 102, 241, 0.1); padding: 24px; border-radius: 12px;">
+                        <div>총 육아휴직급여: <strong style="color: var(--primary); font-size: 32px;">1,550만원</strong></div>
+                        <div>7개월부터 맞벌이 재개</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>🎁 의왕시 특별 혜택</h2>
+
+                <div class="card secondary">
+                    <h3>💝 의왕시 출산장려금</h3>
+                    <table><thead><tr><th>자녀</th><th>지급액</th></tr></thead><tbody>
+                        <tr><td>첫째</td><td style="color: var(--secondary); font-weight: bold; font-size: 20px;">100만원</td></tr>
+                        <tr><td>둘째</td><td style="color: var(--secondary); font-weight: bold; font-size: 20px;">200만원</td></tr>
+                        <tr><td>셋째</td><td style="color: var(--secondary); font-weight: bold; font-size: 20px;">300만원</td></tr>
+                        <tr><td>넷째+</td><td style="color: var(--accent); font-weight: bold; font-size: 24px;">500만원 ⭐</td></tr>
+                    </tbody></table>
+                </div>
+
+                <div class="grid">
+                    <div class="stat-box"><div class="icon">💐</div><div class="value">10만원</div><div>임신축하금</div></div>
+                    <div class="stat-box"><div class="icon">🏘️</div><div class="value">50만원</div><div>경기도 지원금</div></div>
+                </div>
+
+                <div class="card success">
+                    <h3>📞 의왕시 문의처</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px;">
+                        <div style="padding: 16px; background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+                            <div style="font-weight: bold; margin-bottom: 8px;">의왕시청</div>
+                            <div style="color: var(--success); font-weight: bold;">☎️ 031-345-3592</div>
+                        </div>
+                        <div style="padding: 16px; background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+                            <div style="font-weight: bold; margin-bottom: 8px;">만안구보건소</div>
+                            <div style="color: var(--success); font-weight: bold;">☎️ 031-8045-3172</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <div style="font-size: 28px; margin-bottom: 24px;">✨ 건강한 임신, 행복한 출산 응원합니다! ✨</div>
+            <div style="margin: 20px 0; font-size: 18px;"><strong>문의:</strong> 보건복지상담센터 ☎️ 129</div>
+            <div style="opacity: 0.7; font-size: 14px; margin-top: 24px;">마지막 업데이트: 2025년 12월 28일 | 적용 기준: 2026년 1월</div>
+        </footer>
+    </div>
+
+    <div class="scroll-top" id="scrollTop">↑</div>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => document.getElementById('loading').classList.add('hidden'), 1500);
+        });
+
+        const stars = document.getElementById('stars');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            stars.appendChild(star);
+        }
+
+        setTimeout(() => document.getElementById('totalProgress').style.width = '100%', 800);
+
+        document.querySelectorAll('.checklist li').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.classList.toggle('checked');
+                
+                const effect = document.createElement('div');
+                effect.className = 'click-effect';
+                effect.textContent = this.classList.contains('checked') ? '✅' : '🥟';
+                effect.style.left = e.clientX + 'px';
+                effect.style.top = e.clientY + 'px';
+                document.body.appendChild(effect);
+                setTimeout(() => effect.remove(), 1000);
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.checklist') && !e.target.closest('.scroll-top')) {
+                const effects = ['🥟', '✨', '💰', '🎉', '⭐'];
+                const effect = document.createElement('div');
+                effect.className = 'click-effect';
+                effect.textContent = effects[Math.floor(Math.random() * effects.length)];
+                effect.style.left = e.clientX + 'px';
+                effect.style.top = e.clientY + 'px';
+                document.body.appendChild(effect);
+                setTimeout(() => effect.remove(), 1000);
+            }
+        });
+
+        const scrollTop = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTop.classList.toggle('visible', window.scrollY > 500);
+        });
+        scrollTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.addEventListener('dblclick', (e) => {
+            const dumpling = document.createElement('div');
+            dumpling.textContent = '🥟';
+            dumpling.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;font-size:56px;pointer-events:none;z-index:9999;animation:float-across 15s linear forwards;`;
+            document.body.appendChild(dumpling);
+            setTimeout(() => dumpling.remove(), 15000);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && e.target === document.body) {
+                e.preventDefault();
+                window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' });
+            }
+            if (e.code === 'Escape') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        console.log('%c🥟 만두 빚기 가이드', 'font-size: 24px; color: #fbbf24; font-weight: bold;');
+        console.log('%c체크리스트 클릭하면 체크됩니다! ✅', 'font-size: 16px; color: #10b981;');
+        console.log('%c더블클릭하면 만두 날아갑니다! 🥟', 'font-size: 16px; color: #fbbf24;');
+    </script>
+</body>
+</html>
